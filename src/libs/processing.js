@@ -1,8 +1,10 @@
-var path = require('path');
-var _ = require('underscore');
-var textract = require('textract');
-var mime = require('mime');
-var fs = require('fs');
+'use strict';
+const path     = require('path'),
+      _        = require('underscore'),
+      textract = require('textract'),
+      mime     = require('mime'),
+      fs       = require('fs'),
+      logger   = require('tracer').colorConsole();
 
 module.exports.run = processFile;
 
@@ -12,11 +14,12 @@ module.exports.run = processFile;
  * @param cbAfterProcessing
  */
 function processFile(file, cbAfterProcessing) {
-  extractText(file, function(PreparedFile) {
+  extractText(file, function (PreparedFile) {
     if (_.isFunction(cbAfterProcessing)) {
+
       cbAfterProcessing(PreparedFile);
     } else {
-      return console.error('cbAfterProcessing should be a function');
+      return logger.error('cbAfterProcessing should be a function');
     }
   });
 }
@@ -28,8 +31,8 @@ function processFile(file, cbAfterProcessing) {
  */
 function cleanTextByRows(data) {
   var rows,
-    clearRow,
-    clearRows = [];
+      clearRow,
+      clearRows = [];
 
   rows = data.split("\n");
   for (var i = 0; i < rows.length; i++) {
@@ -48,16 +51,17 @@ function cleanTextByRows(data) {
  * @param cbAfterExtract
  */
 function extractText(file, cbAfterExtract) {
-  textract(file, {preserveLineBreaks: true}, function(err, data) {
+  logger.trace(file)
+  textract.fromFileWithPath(file, {preserveLineBreaks: true}, function (err, data) {
     if (err) {
-      return console.log(err);
+      return logger.error(err);
     }
     if (_.isFunction(cbAfterExtract)) {
       data = cleanTextByRows(data);
       var File = new PreparedFile(file, data.replace(/^\s/gm, ''));
       cbAfterExtract(File);
     } else {
-      return console.error('cbAfterExtract should be a function');
+      return logger.error('cbAfterExtract should be a function');
     }
   });
 }
@@ -83,15 +87,15 @@ function PreparedFile(file, raw) {
  *
  * @param Resume
  */
-PreparedFile.prototype.addResume = function(Resume) {
+PreparedFile.prototype.addResume = function (Resume) {
   this.resume = Resume;
 };
 
-PreparedFile.prototype.saveResume = function(path, cbSavedResume) {
+PreparedFile.prototype.saveResume = function (path, cbSavedResume) {
   path = path || __dirname;
 
   if (!_.isFunction(cbSavedResume)) {
-    return console.error('cbSavedResume should be a function');
+    return logger.error('cbSavedResume should be a function');
   }
 
   if (fs.statSync(path).isDirectory() && this.resume) {

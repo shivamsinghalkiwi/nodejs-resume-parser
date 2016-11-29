@@ -1,11 +1,10 @@
-# Resume parser
-Solution for [Code4Goal - Coding Contest](http://app.crowdsourcehire.com/code4goal/)
+# Node.js Resume parser
 
-Authored and maintained by Lizurchik Alexey, 2015
+Authored by Lizurchik Alexey, extended to work with express by Nick Satija
 
 # The Problem
 
-Often Companies have problems with sorting out large volumes of CVs / Resumes advertising for their job roles. In order to minimise their time in sorting out and have a benchmark way of comparing candidates, you've been tasked with the challenging task of assisting their problem.
+The original parse does not work with express and hence been extended to be able to upload files from express and create a JSON version of resume
 
 # Contest
 
@@ -13,7 +12,7 @@ Develop a parser that is able to parse through CVs / Resumes in the word (.doc o
 
 # Solution
 
-This Resume parser can run throught unlimited number of Resumes and get relevant info from that. With full-feature installation it supports most of the common use formats, provided by [textract](https://github.com/dbashford/textract):
+This Resume parser can run through unlimited number of Resumes and get relevant info from that. With full-feature installation it supports most of the common use formats, provided by [textract](https://github.com/dbashford/textract):
 
  - HTML
  - PDF
