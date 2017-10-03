@@ -4,24 +4,15 @@ var _ = require('underscore');
 var logger = require('tracer').colorConsole();
 
 var parser = {
-  parseResume: function (file,savePath) {
+  parseResume: function (file,savePath,cb) {
     var objParseBoy = new ParseBoy(), savedFiles = 0;
 
-
-    var onFileReady = function (preppedFile) {
+    var onFileReady = function (preppedFile,cb) {
       objParseBoy.parseFile(preppedFile, function (Resume) {
-        logger.trace('I got Resume for ' + preppedFile.name + ', now saving...');
-
-        objParseBoy.storeResume(preppedFile, Resume, savePath, function (err) {
-          if (err) {
-            return logger.error('Resume ' + preppedFile.name + ' errored',err);
-          }
-          logger.trace('Resume ' + preppedFile.name + ' saved');
-
-        })
+        cb(null, Resume.parts);
       });
     }
-    processing.run(file, onFileReady);
+    processing.run(file, onFileReady, cb);
   }
 }
 module.exports = parser;

@@ -13,11 +13,10 @@ module.exports.run = processFile;
  * @param file
  * @param cbAfterProcessing
  */
-function processFile(file, cbAfterProcessing) {
+function processFile(file, cbAfterProcessing, cb) {
   extractText(file, function (PreparedFile) {
     if (_.isFunction(cbAfterProcessing)) {
-
-      cbAfterProcessing(PreparedFile);
+      cbAfterProcessing(PreparedFile, cb);
     } else {
       return logger.error('cbAfterProcessing should be a function');
     }

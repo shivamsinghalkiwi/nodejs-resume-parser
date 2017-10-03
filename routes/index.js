@@ -28,8 +28,11 @@ router.get('/', function (req, res, next) {
 router.post('/', upload.single('upl'), function (req, res, next) {
   console.log("success");
   console.log(req.file.path);
-  parseIt.parseResume(req.file.path, './compiled');
-  res.status(204).end();
+  parseIt.parseResume(req.file.path, './compiled', function(err, data){
+    if(!err){
+      res.send(data);
+    }
+  });
 });
 
 
