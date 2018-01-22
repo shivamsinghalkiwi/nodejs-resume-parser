@@ -44,8 +44,8 @@ Project is nodejs cli application with some dependencies. If you already have in
  - Then, clone this repo `git clone git@github.com:likerRr/code4goal-resume-parser.git`
  - Run `npm install` in terminal from root folder of project to setup dependencies
  - At this moment application will work fine, but! By default it supports only `.TXT` and `.HTML` text formats. For better performance you should install at least support of `.PDF` (and `.DOC`). Here is instructions, how to do it from [textract README](https://github.com/dbashford/textract#requirements) file:
-	 - `PDF` extraction requires `pdftotext` be installed, [link](http://www.foolabs.com/xpdf/download.html)
-	 - `DOC` extraction requires `catdoc` be installed, [link](http://www.wagner.pp.ru/~vitus/software/catdoc/), unless on OSX in which case textutil (installed by default) is used.
+	 - `PDF` extraction requires `pdftotext` be installed, [link](http://www.foolabs.com/xpdf/download.html), or do `sudo apt-get install poppler-utils`.
+	 - `DOC` extraction requires `catdoc` be installed, [link](http://www.wagner.pp.ru/~vitus/software/catdoc/), unless on OSX in which case textutil (installed by default) is used, or do `sudo apt-get install antiword`.
 	 - `DOCX` extraction requires `unzip` be available (e.g. `sudo apt-get install unzip` for Ubuntu)
 		
 > Please, note, that it's not necessary install support of all formats but preferably. As for me, I didn't get setup `catdoc` for `.DOC` files under Windows 7, so I played only with `.TXT`, `.HTML`, `.PDF` formats, but I know, it will also work with the rest formats :)
